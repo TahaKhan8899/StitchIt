@@ -1,0 +1,55 @@
+import React from 'react'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
+import './App.css'
+import data from './data'
+import HomePage from './components/pages/HomePage'
+import ProductPage from './components/pages/ProductPage'
+
+function App() {
+  const openMenu = () => {
+    document.querySelector('.sidebar').classList.add('open')
+  }
+  const closeMenu = () => {
+    document.querySelector('.sidebar').classList.remove('open')
+  }
+  console.log(data)
+  return (
+    <BrowserRouter>
+      <div className="grid-container">
+        <header className="header">
+          <div className="brand">
+            <button onClick={openMenu}>&#9776;</button>
+            <Link to="/">StitchIt</Link>
+          </div>
+          <div className="header-links">
+            <a href="/">Cart</a>
+            <a href="/">Sign In</a>
+          </div>
+        </header>
+        <aside className="sidebar">
+          <h3>Shopping Categories</h3>
+          <button className="sidebar-close-btn" onClick={closeMenu}>
+            X
+          </button>
+          <ul>
+            <li>
+              <a href="/">Bookmarks</a>
+            </li>
+            <li>
+              <a href="/">Mugs</a>
+            </li>
+          </ul>
+        </aside>
+        <main className="main">
+          <div className="content">
+            <Route path="/product/:id" component={ProductPage} />
+            <Route path="/" component={HomePage} exact={true} />
+          </div>
+        </main>
+        <footer className="footer">All right reserved.</footer>
+      </div>
+    </BrowserRouter>
+  )
+}
+
+export default App
