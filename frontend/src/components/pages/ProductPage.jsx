@@ -67,8 +67,6 @@ const AddToCart = styled(Column)`
   }
 `
 
-const StyledName = styled.div``
-
 function ProductPage(props) {
   const product = data.products.find((x) => x._id === parseInt(props.match.params.id, 10))
   return (
@@ -80,7 +78,7 @@ function ProductPage(props) {
       </Row>
       <ProductSection>
         <ProductImage>
-          <img src={product.image} alt="product"></img>
+          <img src={product.image} alt="product" />
         </ProductImage>
         <ProductInfo>
           <ul>

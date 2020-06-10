@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import './App.css'
-import data from './data'
 import HomePage from './components/pages/HomePage'
 import ProductPage from './components/pages/ProductPage'
 
@@ -12,7 +11,6 @@ function App() {
   const closeMenu = () => {
     document.querySelector('.sidebar').classList.remove('open')
   }
-  console.log(data)
   return (
     <BrowserRouter>
       <div className="grid-container">
