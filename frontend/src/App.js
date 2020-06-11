@@ -40,7 +40,7 @@ function App() {
         </aside>
         <main className="main">
           <div className="content">
-            <Route path="/product/:id" component={ProductPage} />
+            <Route path="/products/:id" component={ProductPage} />
             <Route path="/" component={HomePage} exact={true} />
           </div>
         </main>

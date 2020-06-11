@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
-import data from 'data'
+import { useSelector, useDispatch } from 'react-redux'
+import { getProductDetails } from 'actions/productActions'
 
 const ProductSection = styled(Row)`
   display: flex;
@@ -68,8 +69,20 @@ const AddToCart = styled(Column)`
 `
 
 function ProductPage(props) {
-  const product = data.products.find((x) => x._id === parseInt(props.match.params.id, 10))
-  return (
+  const productDetails = useSelector((state) => state.productDetails)
+  const { product, loading, error } = productDetails
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    console.log('get details')
+    dispatch(getProductDetails(props.match.params.id))
+  }, [dispatch, props.match.params.id])
+
+  return loading ? (
+    <div>Loading...</div>
+  ) : error ? (
+    <div>{error}</div>
+  ) : (
     <BodyContainer>
       <Row>
         <BackButton>
