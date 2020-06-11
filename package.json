@@ -1,0 +1,29 @@
+{
+  "name": "stitchit",
+  "version": "1.0.0",
+  "description": "Backend for stitchIt app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec babel-node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TahaKhan8899/StitchIt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TahaKhan8899/StitchIt/issues"
+  },
+  "homepage": "https://github.com/TahaKhan8899/StitchIt#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "nodemon": "^2.0.4"
+  }
+}
