@@ -1,0 +1,4 @@
+export const CART_LOADING = 'CART_LOADING'
+export const CART_SUCCESS = 'CART_SUCCESS'
+export const CART_ADD_PRODUCT = 'CART_ADD_PRODUCT'
+export const CART_ERROR = 'CART_ERROR'

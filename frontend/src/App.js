@@ -1,8 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import './App.css'
-import HomePage from './components/pages/HomePage'
-import ProductPage from './components/pages/ProductPage'
+import Home from './components/pages/Home'
+import Product from './components/pages/Product'
+import Cart from './components/pages/Cart'
 
 function App() {
   const openMenu = () => {
@@ -40,8 +41,9 @@ function App() {
         </aside>
         <main className="main">
           <div className="content">
-            <Route path="/products/:id" component={ProductPage} />
-            <Route path="/" component={HomePage} exact={true} />
+            <Route path="/" component={Home} exact={true} />
+            <Route path="/products/:id" component={Product} />
+            <Route path="/cart/:id?" component={Cart} />
           </div>
         </main>
         <footer className="footer">All right reserved.</footer>
