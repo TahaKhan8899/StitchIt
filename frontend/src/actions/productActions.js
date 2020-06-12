@@ -12,7 +12,7 @@ const getProductList = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_LOADING })
     const { data } = await axios.get('/api/products')
-    console.log('Successfully retrieved all product data')
+    console.log('Successfully retrieved ALL product data')
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
   } catch (error) {
     dispatch({ type: PRODUCT_LIST_ERROR, payload: error.message })
@@ -23,7 +23,7 @@ const getProductDetails = (productId) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_LOADING, payload: productId })
     const { data } = await axios.get('/api/products/' + productId)
-    console.log(data)
+    console.log('Successfully retrieved product data')
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data })
   } catch (error) {
     dispatch({ type: PRODUCT_DETAILS_ERROR, payload: error.message })

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getProductList } from 'actions/productActions'
 
-function HomePage(props) {
+function Home(props) {
   const productList = useSelector((state) => state.productList)
   const { products, loading, error } = productList
   const dispatch = useDispatch()
@@ -37,4 +37,4 @@ function HomePage(props) {
     </ul>
   )
 }
-export default HomePage
+export default Home

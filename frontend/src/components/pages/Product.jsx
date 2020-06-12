@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductDetails } from 'actions/productActions'
+import { useState } from 'react'
 
 const ProductSection = styled(Row)`
   display: flex;
@@ -68,7 +69,8 @@ const AddToCart = styled(Column)`
   }
 `
 
-function ProductPage(props) {
+function Product(props) {
+  const [qty, setQty] = useState(1)
   const productDetails = useSelector((state) => state.productDetails)
   const { product, loading, error } = productDetails
   const dispatch = useDispatch()
@@ -77,6 +79,10 @@ function ProductPage(props) {
     console.log('get details')
     dispatch(getProductDetails(props.match.params.id))
   }, [dispatch, props.match.params.id])
+
+  const handleAddToCart = () => {
+    props.history.push('/cart/' + props.match.params.id + '?qty=' + qty)
+  }
 
   return loading ? (
     <div>Loading...</div>
@@ -112,18 +118,22 @@ function ProductPage(props) {
         <AddToCart>
           <ul>
             <li>Price: {product.price}</li>
-            <li>Status: {product.status}</li>
+            <li>Status: {product.inventoryCount > 0 ? 'In Stock' : 'Out of Stock'}</li>
             <li>
               Quantity:{' '}
-              <select name="" id="">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+              <select
+                value={qty}
+                onChange={(e) => {
+                  setQty(e.target.value)
+                }}
+              >
+                {[...Array(product.inventoryCount).keys()].map((x) => (
+                  <option value={x + 1}>{x + 1}</option>
+                ))}
               </select>
             </li>
             <li>
-              <button>Add to Cart</button>
+              {product.inventoryCount > 0 && <button onClick={handleAddToCart}>Add to Cart</button>}
             </li>
           </ul>
         </AddToCart>
@@ -131,4 +141,4 @@ function ProductPage(props) {
     </BodyContainer>
   )
 }
-export default ProductPage
+export default Product
