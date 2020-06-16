@@ -26,19 +26,6 @@ a {
   color: #fff;
   display: block;
 }
-.brand a {
-  color: #fff;
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-decoration: none;
-}
-.header-links a {
-  color: #fff;
-  text-decoration: none;
-}
-.header-links a:hover {
-  color: #ff8000;
-}
 .main {
   grid-area: main;
 }
@@ -95,39 +82,4 @@ a:hover {
 }
 .product-rating {
   margin-bottom: 1rem;
-}
-
-/* Sidebar */
-.brand button {
-  font-size: 3rem;
-  padding: 0.5rem;
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-
-.sidebar {
-  position: fixed;
-  transition: all 0.5s;
-  transform: translateX(-30rem);
-  width: 30rem;
-  background-color: #f0f0f0;
-  height: 100%;
-}
-.sidebar.open {
-  transform: translateX(0);
-}
-.sidebar-close-btn {
-  border-radius: 50%;
-  border: 0.1rem solid black;
-  width: 3rem;
-  height: 3rem;
-  padding: 0.5rem;
-  font-size: 2rem;
-  padding: 0;
-  cursor: pointer;
-  position: absolute;
-  right: 0.5rem;
-  top: 1.5rem;
 }

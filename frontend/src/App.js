@@ -5,7 +5,6 @@ import Home from './components/pages/Home'
 import Product from './components/pages/Product'
 import Cart from './components/pages/Cart'
 import Header from 'components/common/Header'
-import SideBar from 'components/common/SideBar'
 import Footer from 'components/common/Footer'
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <Header />
-        <SideBar />
         <main className="main">
           <div className="content">
             <Route path="/" component={Home} exact={true} />
