@@ -6,6 +6,9 @@ body {
   font: 1.6rem Helvetica;
   margin: 0;
 }
+button {
+  font-size: 1.6rem;
+}
 a {
   text-decoration: none;
 }
