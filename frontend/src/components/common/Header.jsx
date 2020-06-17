@@ -53,7 +53,7 @@ function Header() {
           <Link to="/">StitchIt</Link>
         </HomeSection>
         <LinkSection>
-          <a href="/">Cart</a>
+          <Link to="/cart">Cart</Link>
           <a href="/">Sign In</a>
         </LinkSection>
       </StyledBodyContainer>
