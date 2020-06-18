@@ -18,6 +18,8 @@ const app = express()
 
 app.use('/api/users', userRouter)
 
+app.get('/', (req, res) => res.redirect('/api/products'))
+
 app.get('/api/products', (req, res) => res.send(data.products))
 
 app.get('/api/products/:id', (req, res) => {
