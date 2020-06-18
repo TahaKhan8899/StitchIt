@@ -1,5 +1,5 @@
 import express from 'express'
-import path from 'path'
+// import path from 'path'
 import data from './data'
 import config from './config'
 import mongoose from 'mongoose'
@@ -17,10 +17,10 @@ mongoose.set('useCreateIndex', true)
 
 const app = express()
 
-app.use(express.static(path.join(__dirname, '/../frontend/build')))
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`))
-})
+// app.use(express.static(path.join(__dirname, '/../frontend/build')))
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`))
+// })
 
 app.use('/api/users', userRouter)
 
