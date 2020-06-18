@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import data from './data'
 import config from './config'
 import mongoose from 'mongoose'
@@ -16,9 +17,12 @@ mongoose.set('useCreateIndex', true)
 
 const app = express()
 
-app.use('/api/users', userRouter)
+app.use(express.static(path.join(__dirname, '/../frontend/build')))
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`))
+})
 
-app.get('/', (req, res) => res.redirect('/api/products'))
+app.use('/api/users', userRouter)
 
 app.get('/api/products', (req, res) => res.send(data.products))
 
@@ -30,6 +34,6 @@ app.get('/api/products/:id', (req, res) => {
   } else res.status(404).send({ msg: 'Product Not Found' })
 })
 
-app.listen(5000, () => {
-  console.log('server started at http://localhost:5000')
+app.listen(config.PORT, () => {
+  console.log(`server started at port: ${config.PORT}`)
 })
