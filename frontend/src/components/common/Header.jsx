@@ -33,6 +33,7 @@ const LinkSection = styled.div`
   a {
     color: #fff;
     text-decoration: none;
+    margin-right: 1.5rem;
   }
   a:hover {
     color: #ff8000;
@@ -54,7 +55,7 @@ function Header() {
         </HomeSection>
         <LinkSection>
           <Link to="/cart">Cart</Link>
-          <a href="/">Sign In</a>
+          <Link to="/signin">Sign In</Link>
         </LinkSection>
       </StyledBodyContainer>
     </header>

@@ -17,8 +17,6 @@ mongoose
   .catch((error) => console.log('error: ', error.reason))
 mongoose.set('useCreateIndex', true)
 
-console.log('Connected to DB')
-
 const app = express()
 
 app.use('/api/users', userRouter)

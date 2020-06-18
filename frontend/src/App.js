@@ -6,6 +6,7 @@ import Product from './components/pages/Product'
 import Cart from './components/pages/Cart'
 import Header from 'components/common/Header'
 import Footer from 'components/common/Footer'
+import SignIn from 'components/pages/SignIn'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <main className="main">
           <div className="content">
             <Route path="/" component={Home} exact={true} />
+            <Route path="/signin" component={SignIn} exact={true} />
             <Route path="/products/:id" component={Product} />
             <Route path="/cart/:id?" component={Cart} />
           </div>
