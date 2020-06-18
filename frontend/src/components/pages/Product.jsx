@@ -127,8 +127,10 @@ function Product(props) {
                   setQty(e.target.value)
                 }}
               >
-                {[...Array(product.inventoryCount).keys()].map((x) => (
-                  <option value={x + 1}>{x + 1}</option>
+                {[...Array(product.inventoryCount).keys()].map((x, idx) => (
+                  <option key={`option-${idx}`} value={x + 1}>
+                    {x + 1}
+                  </option>
                 ))}
               </select>
             </li>
