@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
+import { SystemColor } from 'globalConstants'
 import { FormButton } from 'components/common/SystemStyledComponents'
-import styled from 'styled-components'
+import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import { signin } from 'actions/userActions'
 import { selectUserState } from 'selectors/user'
 
@@ -35,6 +36,14 @@ const FormInputColumn = styled(Column)`
   }
 `
 
+const StateSection = styled.div`
+  margin-bottom: 1.5rem;
+`
+const LoadingState = styled.div``
+const ErrorState = styled.div`
+  color: ${SystemColor.uiElements.errorRed};
+`
+
 function SignIn(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -64,7 +73,10 @@ function SignIn(props) {
           <Column>
             <SignInText>Sign-In</SignInText>
           </Column>
-          <Column>Loading</Column>
+          <StateSection>
+            {loading && <LoadingState>Loading...</LoadingState>}
+            {error && <ErrorState>Error...</ErrorState>}
+          </StateSection>
           <FormInputColumn>
             <label htmlFor="email">Email</label>
             <input type="text" id="email" name="email" onChange={(e) => setEmail(e.target.value)} />
