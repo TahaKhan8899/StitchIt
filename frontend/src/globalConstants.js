@@ -17,14 +17,8 @@ const SystemColor = {
     white: '#FFFFFF',
   },
   uiElements: {
-    increaseGreen: '#217854',
-    decreaseRed: '#D63131',
-    highDividendOrange: '#BD5B00',
-    watchlistPurple: '#7E3099',
-    highGrowthMediumBlue: '#037FA7',
-    blueDivOnDark: '#385B79',
-    highlightLightGreen: '#1BB955',
-    decreaseLightRed: '#F46565',
+    errorRed: '#fa3737',
+    buttonOrange: '#f0c040',
   },
 }
 

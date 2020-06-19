@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { FormButton } from 'components/common/FormComponents'
+import { FormButton } from 'components/common/SystemStyledComponents'
+import { SystemColor } from 'globalConstants'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from 'actions/cartActions'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
@@ -142,7 +143,7 @@ function Cart(props) {
           {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
         </h3>
         <FormButton
-          bgColor="#f0c040"
+          bgColor={SystemColor.uiElements.buttonOrange}
           disabled={cartItems.length === 0}
           onClick={() => handleCheckout()}
         >

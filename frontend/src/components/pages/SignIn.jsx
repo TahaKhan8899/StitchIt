@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
-import { FormButton } from 'components/common/FormComponents'
+import { FormButton } from 'components/common/SystemStyledComponents'
 import styled from 'styled-components'
 import { signin } from 'actions/userActions'
+import { selectUserState } from 'selectors/user'
 
 const StyledBodyContainer = styled(BodyContainer)`
   display: flex;
@@ -34,10 +35,24 @@ const FormInputColumn = styled(Column)`
   }
 `
 
-function SignIn() {
+function SignIn(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
+  const userState = useSelector(selectUserState)
+  console.log(userState)
+  const {
+    loading,
+    data: { loggedInUser },
+    error,
+  } = userState
+
+  useEffect(() => {
+    if (loggedInUser) {
+      props.history.push('/')
+    }
+  }, [loggedInUser])
+
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(signin(email, password))
@@ -49,6 +64,7 @@ function SignIn() {
           <Column>
             <SignInText>Sign-In</SignInText>
           </Column>
+          <Column>Loading</Column>
           <FormInputColumn>
             <label htmlFor="email">Email</label>
             <input type="text" id="email" name="email" onChange={(e) => setEmail(e.target.value)} />

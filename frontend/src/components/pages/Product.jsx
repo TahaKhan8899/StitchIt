@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { FormButton } from 'components/common/FormComponents'
+import { FormButton } from 'components/common/SystemStyledComponents'
+import { SystemColor } from 'globalConstants'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductDetails } from 'actions/productActions'
@@ -124,7 +125,7 @@ function Product(props) {
             </li>
             <li>
               {product.inventoryCount > 0 && (
-                <FormButton bgColor="#f0c040" onClick={handleAddToCart}>
+                <FormButton bgColor={SystemColor.uiElements.buttonOrange} onClick={handleAddToCart}>
                   Add to Cart
                 </FormButton>
               )}
