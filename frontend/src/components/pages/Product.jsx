@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { FormButton } from 'components/common/FormComponents'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductDetails } from 'actions/productActions'
@@ -53,19 +54,6 @@ const AddToCart = styled(Column)`
   li:last-child {
     display: flex;
     flex-direction: column;
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      border: 0.1rem #808080 solid;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      background-color: #f0c040;
-    }
-    button:hover {
-      border: 0.1rem #404040 solid;
-    }
   }
 `
 
@@ -135,7 +123,11 @@ function Product(props) {
               </select>
             </li>
             <li>
-              {product.inventoryCount > 0 && <button onClick={handleAddToCart}>Add to Cart</button>}
+              {product.inventoryCount > 0 && (
+                <FormButton bgColor="#f0c040" onClick={handleAddToCart}>
+                  Add to Cart
+                </FormButton>
+              )}
             </li>
           </ul>
         </AddToCart>

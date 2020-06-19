@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { FormButton } from 'components/common/FormComponents'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from 'actions/cartActions'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
@@ -24,16 +25,6 @@ const CartActions = styled(Column)`
   border-radius: 0.5rem;
   padding: 1rem;
   height: fit-content;
-`
-
-const CheckoutButton = styled.button`
-  width: inherit;
-  display: flex;
-  justify-content: center;
-  background-color: #f0c040;
-  border: 0.1rem #808080 solid;
-  border-radius: 0.5rem;
-  padding: 1rem;
 `
 
 const Product = styled.div`
@@ -150,9 +141,13 @@ function Cart(props) {
           Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items) : $
           {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
         </h3>
-        <CheckoutButton disabled={cartItems.length === 0} onClick={() => handleCheckout()}>
+        <FormButton
+          bgColor="#f0c040"
+          disabled={cartItems.length === 0}
+          onClick={() => handleCheckout()}
+        >
           Proceed to checkout
-        </CheckoutButton>
+        </FormButton>
       </CartActions>
     </CartContainer>
   )
