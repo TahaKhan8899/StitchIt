@@ -3,12 +3,9 @@ import {
   USER_SIGNIN_SUCCESS,
   USER_SIGNIN_ERROR,
 } from 'constants/userConstants'
-import { commonInitialState } from './constants'
+import { userInitialState } from 'constants/initialStates'
 
-function userSigninReducer(
-  state = { ...commonInitialState, data: { loggedInUser: null } },
-  action
-) {
+function userSigninReducer(state = userInitialState, action) {
   switch (action.type) {
     case USER_SIGNIN_LOADING:
       return { ...state, loading: true }

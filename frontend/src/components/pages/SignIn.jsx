@@ -39,7 +39,9 @@ const FormInputColumn = styled(Column)`
 const StateSection = styled.div`
   margin-bottom: 1.5rem;
 `
-const LoadingState = styled.div``
+const LoadingState = styled.div`
+  color: ${SystemColor.uiElements.loadingYellow};
+`
 const ErrorState = styled.div`
   color: ${SystemColor.uiElements.errorRed};
 `
@@ -49,7 +51,6 @@ function SignIn(props) {
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const userState = useSelector(selectUserState)
-  console.log(userState)
   const {
     loading,
     data: { loggedInUser },
@@ -60,7 +61,7 @@ function SignIn(props) {
     if (loggedInUser) {
       props.history.push('/')
     }
-  }, [loggedInUser])
+  }, [loggedInUser, props.history])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -75,7 +76,7 @@ function SignIn(props) {
           </Column>
           <StateSection>
             {loading && <LoadingState>Loading...</LoadingState>}
-            {error && <ErrorState>Error...</ErrorState>}
+            {error && <ErrorState>{error.response.data.msg}</ErrorState>}
           </StateSection>
           <FormInputColumn>
             <label htmlFor="email">Email</label>

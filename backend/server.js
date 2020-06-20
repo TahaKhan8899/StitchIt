@@ -2,20 +2,15 @@ import express from 'express'
 // import path from 'path'
 import data from './data'
 import config from './config'
+import { connectToMongoDB } from './util'
 import mongoose from 'mongoose'
 import userRouter from './routes/userRoute'
+import bodyParser from 'body-parser'
 
-const mongodbUrl = config.MONGODB_URL
-
-mongoose
-  .connect(mongodbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch((error) => console.log('error: ', error.reason))
-mongoose.set('useCreateIndex', true)
+connectToMongoDB()
 
 const app = express()
+app.use(bodyParser.json())
 
 // app.use(express.static(path.join(__dirname, '/../frontend/build')))
 // app.get('*', (req, res) => {

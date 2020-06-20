@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { BodyContainer } from './layoutStyling'
 import styled from 'styled-components'
 import SideBar from 'components/common/SideBar'
+import { selectLoggedInUserState } from 'selectors/user'
 
 const HomeSection = styled.div`
   display: flex;
@@ -41,6 +43,7 @@ const LinkSection = styled.div`
 `
 
 function Header() {
+  const userInfo = useSelector(selectLoggedInUserState)
   const [isOpen, setIsOpen] = useState(false)
   const toggleMenu = () => {
     setIsOpen(!isOpen)
@@ -55,7 +58,11 @@ function Header() {
         </HomeSection>
         <LinkSection>
           <Link to="/cart">Cart</Link>
-          <Link to="/signin">Sign In</Link>
+          {userInfo ? (
+            <Link to="/profile">Hi {userInfo.name}!</Link>
+          ) : (
+            <Link to="/signin">Sign In</Link>
+          )}
         </LinkSection>
       </StyledBodyContainer>
     </header>
