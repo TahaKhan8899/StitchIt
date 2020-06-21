@@ -48,6 +48,9 @@ function Header() {
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
+  const handleLogout = () => {
+    return true
+  }
   return (
     <header className="header">
       <SideBar toggleMenu={toggleMenu} isOpen={isOpen} />
@@ -59,9 +62,17 @@ function Header() {
         <LinkSection>
           <Link to="/cart">Cart</Link>
           {userInfo ? (
-            <Link to="/profile">Hi {userInfo.name}!</Link>
+            <>
+              <Link to="/profile">Hi {userInfo.name}!</Link>
+              <Link to="/" onClick={() => handleLogout()}>
+                Log Out
+              </Link>
+            </>
           ) : (
-            <Link to="/signin">Sign In</Link>
+            <>
+              <Link to="/signin">Sign In</Link>
+              <Link to="/register">Register</Link>
+            </>
           )}
         </LinkSection>
       </StyledBodyContainer>
