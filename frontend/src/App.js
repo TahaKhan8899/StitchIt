@@ -9,7 +9,7 @@ import Header from 'components/common/Header'
 import Footer from 'components/common/Footer'
 import SignIn from 'components/pages/SignIn'
 import Register from 'components/pages/Register'
-import CreateProduct from 'components/pages/CreateProduct'
+import CreateProduct from 'components/pages/CreateProduct/CreateProduct'
 
 const MainContent = styled.div`
   background-color: #f6f7f8;

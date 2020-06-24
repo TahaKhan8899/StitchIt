@@ -5,8 +5,9 @@ import { SystemColor, breakPoints } from 'globalConstants'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import { createProduct, getProductList } from 'actions/productActions'
-import { selectProductListState, selectCreatedProductState } from 'selectors/product'
+import { selectCreatedProductState } from 'selectors/product'
 import ModalWindow from 'components/ModalWindow'
+import DisplayAllProducts from './DisplayAllProducts'
 
 const StyledBodyContainer = styled(BodyContainer)`
   display: flex;
@@ -36,7 +37,6 @@ const FormInputColumn = styled(Column)`
   }
 `
 
-const AllProductsContainer = styled.div``
 const ProductHeader = styled.div``
 const OuterRow = styled(Row)`
   width: 100%;
@@ -58,50 +58,6 @@ const CreateContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `
-
-function DisplayAllProducts({ openModal }) {
-  const productListState = useSelector(selectProductListState)
-  const {
-    loading: productListLoading,
-    error: productListError,
-    products: allProducts,
-  } = productListState
-  return (
-    <AllProductsContainer>
-      <StateSection>
-        {productListLoading && <LoadingState>Loading Products...</LoadingState>}
-        {productListError && <ErrorState>{productListError.response.data.msg}</ErrorState>}
-      </StateSection>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allProducts.map((product, idx) => (
-            <tr key={`prod-num-${idx}`}>
-              <td>{product.id}</td>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
-              <td>{product.category}</td>
-              <td>{product.brand}</td>
-              <td>
-                <button onClick={() => openModal(product)}>Edit</button>
-                <button>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </AllProductsContainer>
-  )
-}
 
 function CreateProduct(props) {
   const [modalVisible, setModalVisible] = useState(false)
@@ -169,6 +125,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="name">Name</label>
                       <input
+                        value={name}
                         type="text"
                         id="name"
                         name="name"
@@ -178,6 +135,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Price">Price</label>
                       <input
+                        value={price}
                         type="number"
                         id="price"
                         name="price"
@@ -187,6 +145,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Description">Description</label>
                       <input
+                        value={description}
                         type="text"
                         id="description"
                         name="description"
@@ -196,6 +155,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Image">Image</label>
                       <input
+                        value={image}
                         type="text"
                         id="image"
                         name="image"
@@ -205,6 +165,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Brand">Brand</label>
                       <input
+                        value={brand}
                         type="text"
                         id="brand"
                         name="brand"
@@ -214,6 +175,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Category">Category</label>
                       <input
+                        value={category}
                         type="text"
                         id="category"
                         name="category"
@@ -223,6 +185,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Inventory">Inventory Count</label>
                       <input
+                        value={inventoryCount}
                         type="number"
                         id="inventory"
                         name="inventory"
