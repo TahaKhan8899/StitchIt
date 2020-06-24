@@ -68,7 +68,6 @@ const CartItemRow = styled(Row)`
 function Cart(props) {
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
-  console.log(cartItems)
 
   const dispatch = useDispatch()
   const productId = props.match.params.id
