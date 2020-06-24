@@ -17,6 +17,9 @@ const ErrorState = styled.div`
 
 const StyledTable = styled.table`
   width: 100%;
+  tbody > tr:nth-child(odd) {
+    background-color: ${SystemColor.greys.dividerOnGrey};
+  }
 `
 
 function DisplayAllProducts({ openDeleteModal, openModal }) {
