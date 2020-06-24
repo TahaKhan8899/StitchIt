@@ -50,7 +50,7 @@ function Register(props) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [rePassword, setRePassword] = useState('')
+  // const [rePassword, setRePassword] = useState('')
   const dispatch = useDispatch()
   const userState = useSelector(selectUserState)
   const {
@@ -97,7 +97,8 @@ function Register(props) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </FormInputColumn>
-          <FormInputColumn>
+          {/* {//TODO FUNCTIONALITY FOR RE-ENTER PASSWORD} */}
+          {/* <FormInputColumn>
             <label htmlFor="rePassword">Re-Enter Password</label>
             <input
               type="password"
@@ -105,7 +106,7 @@ function Register(props) {
               name="rePassword"
               onChange={(e) => setRePassword(e.target.value)}
             />
-          </FormInputColumn>
+          </FormInputColumn> */}
           <FormInputColumn>
             <FormButton onClick={(e) => submitHandler(e)} bgColor="#f0c040" type="submit">
               Register

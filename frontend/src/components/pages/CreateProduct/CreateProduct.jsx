@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
-import { createProduct, getProductList } from 'actions/productActions'
-import { selectCreatedProductState } from 'selectors/product'
+import { createProduct, getProductList, deleteProduct } from 'actions/productActions'
+import { selectCreatedProductState, selectDeletedProductState } from 'selectors/product'
 import ModalWindow from 'components/ModalWindow'
 import DisplayAllProducts from './DisplayAllProducts'
 
@@ -14,7 +14,7 @@ const StyledBodyContainer = styled(BodyContainer)`
   justify-content: center;
 `
 
-const SignInText = styled.h2`
+const FormText = styled.h2`
   margin-bottom: 2rem;
   @media only screen and ${breakPoints.sm_under} {
     font-size: 2.1rem;
@@ -61,6 +61,7 @@ const CreateContainer = styled.div`
 
 function CreateProduct(props) {
   const [modalVisible, setModalVisible] = useState(false)
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false)
   const [id, setId] = useState('')
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
@@ -82,18 +83,42 @@ function CreateProduct(props) {
     setDescription(product.description)
   }
 
+  const openDeleteModal = (product) => {
+    setDeleteModalVisible(true)
+    setId(product._id)
+  }
+
   const createdProductState = useSelector(selectCreatedProductState)
-  const { loading: createdProductLoading, error: createdProductError } = createdProductState
+  const {
+    loading: createdProductLoading,
+    error: createdProductError,
+    success: createdProductSuccess,
+  } = createdProductState
+
+  const deletedProductState = useSelector(selectDeletedProductState)
+  const { success: deleteProductSuccess } = deletedProductState
 
   const dispatch = useDispatch()
 
   useEffect(() => {
+    if (createdProductSuccess) {
+      setModalVisible(false)
+    }
+    if (deleteProductSuccess) {
+      setDeleteModalVisible(false)
+    }
     dispatch(getProductList())
-  }, [dispatch])
+  }, [dispatch, createdProductSuccess, deleteProductSuccess])
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(createProduct({ name, price, image, brand, category, inventoryCount, description }))
+    dispatch(
+      createProduct({ id, name, price, image, brand, category, inventoryCount, description })
+    )
+  }
+
+  const deleteHandler = () => {
+    dispatch(deleteProduct(id))
   }
   return (
     <StyledBodyContainer>
@@ -109,12 +134,33 @@ function CreateProduct(props) {
                 Create Product
               </FormButton>
             </ProductHeader>
+            {deleteModalVisible && (
+              <ModalWindow onClickOverlay={() => setDeleteModalVisible(false)}>
+                <FormContainer>
+                  <Row>
+                    <Column>
+                      <FormText>Are you sure you want to delete this product?</FormText>
+                    </Column>
+                    <FormInputColumn>
+                      <FormButton
+                        onClick={() => deleteHandler()}
+                        bgColor={SystemColor.uiElements.buttonOrange}
+                        type="submit"
+                      >
+                        Delete
+                      </FormButton>
+                      <FormButton onClick={() => setDeleteModalVisible(false)}>Cancel</FormButton>
+                    </FormInputColumn>
+                  </Row>
+                </FormContainer>
+              </ModalWindow>
+            )}
             {modalVisible && (
               <ModalWindow onClickOverlay={() => setModalVisible(false)}>
                 <FormContainer>
                   <Row>
                     <Column>
-                      <SignInText>Create Product</SignInText>
+                      <FormText>Create Product</FormText>
                     </Column>
                     <StateSection>
                       {createdProductLoading && <LoadingState>Creating...</LoadingState>}
@@ -198,7 +244,7 @@ function CreateProduct(props) {
                         bgColor={SystemColor.uiElements.buttonOrange}
                         type="submit"
                       >
-                        Create
+                        {id ? 'Update' : 'Create'}
                       </FormButton>
                       <FormButton onClick={() => setModalVisible(false)}>Cancel</FormButton>
                     </FormInputColumn>
@@ -209,7 +255,7 @@ function CreateProduct(props) {
           </CreateContainer>
         </Column>
         <Column>
-          <DisplayAllProducts openModal={openModal} />
+          <DisplayAllProducts openDeleteModal={openDeleteModal} openModal={openModal} />
         </Column>
       </OuterRow>
     </StyledBodyContainer>

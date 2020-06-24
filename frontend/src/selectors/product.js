@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 
 const selectProductListState = (state) => state.productList
 const selectCreatedProductState = (state) => state.createdProduct
+const selectDeletedProductState = (state) => state.deletedProduct
 
 const selectProductList = createSelector(
   selectProductListState,
@@ -13,9 +14,16 @@ const selectCreatedProduct = createSelector(
   (CreatedProductState) => CreatedProductState.createdProduct
 )
 
+const selectDeletedProduct = createSelector(
+  selectDeletedProductState,
+  (DeletedProductState) => DeletedProductState.deletedProduct
+)
+
 export {
   selectProductListState,
   selectCreatedProductState,
+  selectDeletedProductState,
   selectProductList,
   selectCreatedProduct,
+  selectDeletedProduct,
 }
