@@ -5,6 +5,9 @@ import {
   PRODUCT_DETAILS_LOADING,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_ERROR,
+  CREATE_PRODUCT_LOADING,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_ERROR,
 } from 'constants/productConstants'
 
 function productListReducer(state = { products: [] }, action) {
@@ -20,7 +23,7 @@ function productListReducer(state = { products: [] }, action) {
   }
 }
 
-function productDetailsReducer(state = { loading: false, error: true }, action) {
+function productDetailsReducer(state = { loading: false, error: false, product: {} }, action) {
   switch (action.type) {
     case PRODUCT_DETAILS_LOADING:
       return { loading: true }
@@ -33,4 +36,20 @@ function productDetailsReducer(state = { loading: false, error: true }, action) 
   }
 }
 
-export { productListReducer, productDetailsReducer }
+function createProductReducer(
+  state = { loading: false, error: false, createdProduct: null },
+  action
+) {
+  switch (action.type) {
+    case CREATE_PRODUCT_LOADING:
+      return { loading: true }
+    case CREATE_PRODUCT_SUCCESS:
+      return { loading: false, error: false, createdProduct: action.payload }
+    case CREATE_PRODUCT_ERROR:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export { productListReducer, productDetailsReducer, createProductReducer }

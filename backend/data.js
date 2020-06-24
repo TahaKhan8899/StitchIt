@@ -8,8 +8,6 @@ export default {
       price: 40,
       brand: 'Haber',
       rating: 4.5,
-      numReviews: 10,
-      inventoryCount: 3,
     },
     {
       _id: 1,
@@ -19,8 +17,6 @@ export default {
       price: 60,
       brand: 'Haber',
       rating: 3.5,
-      numReviews: 10,
-      inventoryCount: 10,
     },
     {
       _id: 2,
@@ -30,8 +26,6 @@ export default {
       price: 25,
       brand: 'Haber',
       rating: 4.5,
-      numReviews: 10,
-      inventoryCount: 4,
     },
   ],
 }

@@ -12,18 +12,16 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const product = new Product({
     name: req.body.name,
-    price: req.body.name,
+    price: req.body.price,
     image: req.body.image,
     brand: req.body.brand,
     category: req.body.category,
     inventoryCount: req.body.inventoryCount,
     description: req.body.description,
-    rating: req.body.rating,
-    numReviews: req.body.numReviews,
   })
   const newProduct = await product.save()
   if (newProduct) {
-    return res.statys(201).send({ message: 'New Product Created', data: newProduct })
+    return res.status(201).send({ message: 'New Product Created', data: newProduct })
   }
   return res.status(500).send({ message: 'Error in Creating a Product' })
 })

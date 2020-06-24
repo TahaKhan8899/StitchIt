@@ -9,6 +9,7 @@ import Header from 'components/common/Header'
 import Footer from 'components/common/Footer'
 import SignIn from 'components/pages/SignIn'
 import Register from 'components/pages/Register'
+import CreateProduct from 'components/pages/CreateProduct'
 
 const MainContent = styled.div`
   background-color: #f6f7f8;
@@ -26,6 +27,7 @@ function App() {
             <Route path="/register" component={Register} exact={true} />
             <Route path="/signin" component={SignIn} exact={true} />
             <Route path="/products/:id" component={Product} />
+            <Route path="/createProduct" component={CreateProduct} />
             <Route path="/cart/:id?" component={Cart} />
           </MainContent>
         </main>

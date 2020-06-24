@@ -5,7 +5,11 @@ import {
   PRODUCT_DETAILS_LOADING,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_ERROR,
+  CREATE_PRODUCT_LOADING,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_ERROR,
 } from 'constants/productConstants'
+import { selectLoggedInUserState } from 'selectors/user'
 import axios from 'axios'
 
 const getProductList = () => async (dispatch) => {
@@ -21,13 +25,25 @@ const getProductList = () => async (dispatch) => {
 
 const getProductDetails = (productId) => async (dispatch) => {
   try {
-    dispatch({ type: PRODUCT_DETAILS_LOADING, payload: productId })
+    dispatch({ type: PRODUCT_DETAILS_LOADING })
     const { data } = await axios.get('/api/products/' + productId)
-    console.log('Successfully retrieved product data')
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data })
   } catch (error) {
     dispatch({ type: PRODUCT_DETAILS_ERROR, payload: error.message })
   }
 }
 
-export { getProductList, getProductDetails }
+const createProduct = (product) => async (dispatch, useSelector) => {
+  try {
+    dispatch({ type: CREATE_PRODUCT_LOADING })
+    const userInfo = useSelector(selectLoggedInUserState)
+    const { data } = await axios.post('/api/products/', product, {
+      headers: { Authorization: 'Bearer ' + userInfo.token },
+    })
+    dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: CREATE_PRODUCT_ERROR, payload: error.message })
+  }
+}
+
+export { getProductList, getProductDetails, createProduct }
