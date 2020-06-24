@@ -8,6 +8,9 @@ import {
   CREATE_PRODUCT_LOADING,
   CREATE_PRODUCT_SUCCESS,
   CREATE_PRODUCT_ERROR,
+  DELETE_PRODUCT_LOADING,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_ERROR,
 } from 'constants/productConstants'
 
 function productListReducer(state = { products: [] }, action) {
@@ -36,15 +39,12 @@ function productDetailsReducer(state = { loading: false, error: false, product: 
   }
 }
 
-function createProductReducer(
-  state = { loading: false, error: false, createdProduct: null },
-  action
-) {
+function createProductReducer(state = { loading: false, error: false }, action) {
   switch (action.type) {
     case CREATE_PRODUCT_LOADING:
       return { loading: true }
     case CREATE_PRODUCT_SUCCESS:
-      return { loading: false, error: false, createdProduct: action.payload }
+      return { loading: false, error: false, success: true, createdProduct: action.payload }
     case CREATE_PRODUCT_ERROR:
       return { loading: false, error: action.payload }
     default:
@@ -52,4 +52,17 @@ function createProductReducer(
   }
 }
 
-export { productListReducer, productDetailsReducer, createProductReducer }
+function deletedProductReducer(state = { loading: false, error: false }, action) {
+  switch (action.type) {
+    case DELETE_PRODUCT_LOADING:
+      return { loading: true }
+    case DELETE_PRODUCT_SUCCESS:
+      return { loading: false, error: false, success: true, deletedProduct: action.payload }
+    case DELETE_PRODUCT_ERROR:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export { productListReducer, productDetailsReducer, createProductReducer, deletedProductReducer }

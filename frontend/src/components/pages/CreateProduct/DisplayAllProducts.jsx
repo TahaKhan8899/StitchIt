@@ -15,7 +15,11 @@ const ErrorState = styled.div`
   color: ${SystemColor.uiElements.errorRed};
 `
 
-function DisplayAllProducts({ openModal }) {
+const StyledTable = styled.table`
+  width: 100%;
+`
+
+function DisplayAllProducts({ openDeleteModal, openModal }) {
   const productListState = useSelector(selectProductListState)
   const {
     loading: productListLoading,
@@ -28,12 +32,13 @@ function DisplayAllProducts({ openModal }) {
         {productListLoading && <LoadingState>Loading Products...</LoadingState>}
         {productListError && <ErrorState>{productListError.response.data.msg}</ErrorState>}
       </StateSection>
-      <table>
+      <StyledTable>
         <thead>
           <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Description</th>
             <th>Category</th>
             <th>Brand</th>
             <th>Action</th>
@@ -42,19 +47,21 @@ function DisplayAllProducts({ openModal }) {
         <tbody>
           {allProducts.map((product, idx) => (
             <tr key={`prod-num-${idx}`}>
-              <td>{product.id}</td>
+              <td>{product._id}</td>
               <td>{product.name}</td>
               <td>{product.price}</td>
+              <td>{product.description}</td>
               <td>{product.category}</td>
               <td>{product.brand}</td>
               <td>
                 <button onClick={() => openModal(product)}>Edit</button>
-                <button>Delete</button>
+                {'  '}
+                <button onClick={() => openDeleteModal(product)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </StyledTable>
     </AllProductsContainer>
   )
 }
