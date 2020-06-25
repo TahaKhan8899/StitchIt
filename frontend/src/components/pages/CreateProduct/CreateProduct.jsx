@@ -3,7 +3,13 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { FormButton } from 'components/common/SystemStyledComponents'
-import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
+import {
+  BodyContainer,
+  Row,
+  Column,
+  ErrorState,
+  LoadingState,
+} from 'components/common/layoutStyling'
 import { createProduct, getProductList, deleteProduct } from 'actions/productActions'
 import { selectCreatedProductState, selectDeletedProductState } from 'selectors/product'
 import ModalWindow from 'components/ModalWindow'
@@ -44,12 +50,6 @@ const OuterRow = styled(Row)`
 
 const StateSection = styled.div`
   margin-bottom: 1.5rem;
-`
-const LoadingState = styled.div`
-  color: ${SystemColor.uiElements.loadingYellow};
-`
-const ErrorState = styled.div`
-  color: ${SystemColor.uiElements.errorRed};
 `
 
 const CreateContainer = styled.div`
@@ -171,7 +171,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="name">Name</label>
                       <input
-                        value={name}
+                        value={name || ''}
                         type="text"
                         id="name"
                         name="name"
@@ -181,8 +181,9 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Price">Price</label>
                       <input
-                        value={price}
+                        value={price || ''}
                         type="number"
+                        onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
                         id="price"
                         name="price"
                         onChange={(e) => setPrice(parseInt(e.target.value, 10))}
@@ -191,7 +192,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Description">Description</label>
                       <input
-                        value={description}
+                        value={description || ''}
                         type="text"
                         id="description"
                         name="description"
@@ -201,7 +202,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Image">Image</label>
                       <input
-                        value={image}
+                        value={image || ''}
                         type="text"
                         id="image"
                         name="image"
@@ -211,7 +212,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Brand">Brand</label>
                       <input
-                        value={brand}
+                        value={brand || ''}
                         type="text"
                         id="brand"
                         name="brand"
@@ -221,7 +222,7 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Category">Category</label>
                       <input
-                        value={category}
+                        value={category || ''}
                         type="text"
                         id="category"
                         name="category"
@@ -231,8 +232,9 @@ function CreateProduct(props) {
                     <FormInputColumn>
                       <label htmlFor="Inventory">Inventory Count</label>
                       <input
-                        value={inventoryCount}
+                        value={inventoryCount || ''}
                         type="number"
+                        onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
                         id="inventory"
                         name="inventory"
                         onChange={(e) => setInventoryCount(parseInt(e.target.value, 10))}

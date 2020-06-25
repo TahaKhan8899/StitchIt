@@ -3,7 +3,13 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor } from 'globalConstants'
-import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
+import {
+  BodyContainer,
+  Row,
+  Column,
+  LoadingState,
+  ErrorState,
+} from 'components/common/layoutStyling'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductDetails } from 'actions/productActions'
 import { useState } from 'react'
@@ -65,7 +71,6 @@ function Product(props) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('get details')
     dispatch(getProductDetails(props.match.params.id))
   }, [dispatch, props.match.params.id])
 
@@ -74,9 +79,13 @@ function Product(props) {
   }
 
   return loading ? (
-    <div>Loading...</div>
+    <BodyContainer>
+      <LoadingState>Loading...</LoadingState>
+    </BodyContainer>
   ) : error ? (
-    <div>{error}</div>
+    <BodyContainer>
+      <ErrorState>{error}</ErrorState>
+    </BodyContainer>
   ) : (
     <BodyContainer>
       <Row>

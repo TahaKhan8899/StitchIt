@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { breakPoints } from 'globalConstants'
+import { breakPoints, SystemColor } from 'globalConstants'
 
 const BodyContainer = styled.div`
   max-width: 1200px;
@@ -86,4 +86,13 @@ const Column = styled.div`
   }
 `
 
-export { BodyContainer, Row, Column }
+const LoadingState = styled.div`
+  color: ${SystemColor.uiElements.loadingYellow};
+  padding: 1rem;
+`
+const ErrorState = styled.div`
+  color: ${SystemColor.uiElements.errorRed};
+  padding: 1rem;
+`
+
+export { BodyContainer, Row, Column, LoadingState, ErrorState }
