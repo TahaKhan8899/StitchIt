@@ -14,6 +14,7 @@ import { createProduct, getProductList, deleteProduct } from 'actions/productAct
 import { selectCreatedProductState, selectDeletedProductState } from 'selectors/product'
 import ModalWindow from 'components/ModalWindow'
 import DisplayAllProducts from './DisplayAllProducts'
+import { selectLoggedInUserState, selectUserState } from 'selectors/user'
 
 const StyledBodyContainer = styled(BodyContainer)`
   display: flex;
@@ -98,6 +99,8 @@ function CreateProduct(props) {
   const deletedProductState = useSelector(selectDeletedProductState)
   const { success: deleteProductSuccess } = deletedProductState
 
+  const { isAdmin } = useSelector(selectLoggedInUserState) || {}
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -107,8 +110,11 @@ function CreateProduct(props) {
     if (deleteProductSuccess) {
       setDeleteModalVisible(false)
     }
+    if (!isAdmin) {
+      props.history.push('/')
+    }
     dispatch(getProductList())
-  }, [dispatch, createdProductSuccess, deleteProductSuccess])
+  }, [dispatch, createdProductSuccess, deleteProductSuccess, isAdmin])
 
   const submitHandler = (e) => {
     e.preventDefault()
