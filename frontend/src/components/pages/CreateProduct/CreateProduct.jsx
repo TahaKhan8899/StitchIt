@@ -14,7 +14,7 @@ import { createProduct, getProductList, deleteProduct } from 'actions/productAct
 import { selectCreatedProductState, selectDeletedProductState } from 'selectors/product'
 import ModalWindow from 'components/ModalWindow'
 import DisplayAllProducts from './DisplayAllProducts'
-import { selectLoggedInUserState, selectUserState } from 'selectors/user'
+import { selectLoggedInUserState } from 'selectors/user'
 
 const StyledBodyContainer = styled(BodyContainer)`
   display: flex;
@@ -114,7 +114,7 @@ function CreateProduct(props) {
       props.history.push('/')
     }
     dispatch(getProductList())
-  }, [dispatch, createdProductSuccess, deleteProductSuccess, isAdmin])
+  }, [dispatch, createdProductSuccess, deleteProductSuccess, isAdmin, props.history])
 
   const submitHandler = (e) => {
     e.preventDefault()

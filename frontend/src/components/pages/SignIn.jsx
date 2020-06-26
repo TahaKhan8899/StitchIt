@@ -57,11 +57,12 @@ function SignIn(props) {
     error,
   } = userState
 
+  const redirect = props.location.search ? props.location.search.split('=')[1] : '/'
   useEffect(() => {
     if (loggedInUser) {
-      props.history.push('/')
+      props.history.push(redirect)
     }
-  }, [loggedInUser, props.history])
+  }, [loggedInUser, props.history, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -72,7 +73,7 @@ function SignIn(props) {
       <FormContainer>
         <Row>
           <Column>
-            <SignInText>Sign-In</SignInText>
+            <SignInText>Sign In</SignInText>
           </Column>
           <StateSection>
             {loading && <LoadingState>Loading...</LoadingState>}
@@ -98,7 +99,7 @@ function SignIn(props) {
           </FormInputColumn>
           <Column>New to StitchIt?</Column>
           <Column>
-            <Link to="/register">
+            <Link to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}>
               <FormButton type="submit">Create your account</FormButton>
             </Link>
           </Column>

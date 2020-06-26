@@ -10,7 +10,7 @@ import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 const CartContainer = styled(BodyContainer)`
   display: flex;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  padding-top: 2rem;
 `
 const CartList = styled(Column)`
   flex: 3 1 60rem;
@@ -81,7 +81,7 @@ function Cart(props) {
     dispatch(removeFromCart(productId))
   }
   const handleCheckout = () => {
-    props.history.push('/signin?redirect=shipping')
+    props.history.push('/signin?redirect=checkout/shipping')
   }
   useEffect(() => {
     if (productId) {

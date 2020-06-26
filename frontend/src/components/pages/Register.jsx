@@ -59,11 +59,12 @@ function Register(props) {
     error,
   } = userState
 
+  const redirect = props.location.search ? props.location.search.split('=')[1] : '/'
   useEffect(() => {
     if (loggedInUser) {
-      props.history.push('/')
+      props.history.push(redirect)
     }
-  }, [loggedInUser, props.history])
+  }, [loggedInUser, props.history, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -114,8 +115,8 @@ function Register(props) {
           </FormInputColumn>
           <Column>Already have an account?</Column>
           <Column>
-            <Link to="/register">
-              <FormButton type="submit">Sign In</FormButton>
+            <Link to={redirect === '/' ? 'signin' : 'signin?redirect=' + redirect}>
+              <FormButton type="submit">Create your account</FormButton>
             </Link>
           </Column>
         </Row>
