@@ -3,6 +3,7 @@ import {
   CART_ADD_PRODUCT,
   CART_ERROR,
   CART_REMOVE_PRODUCT,
+  CART_SAVE_SHIPPING,
 } from 'constants/cartConstants'
 
 function cartReducer(state = { cartItems: [] }, action) {
@@ -34,6 +35,8 @@ function cartReducer(state = { cartItems: [] }, action) {
           return item._id !== productId
         }),
       }
+    case CART_SAVE_SHIPPING:
+      return { ...state, shipping: action.payload }
     default:
       return state
   }

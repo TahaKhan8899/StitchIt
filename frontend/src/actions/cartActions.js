@@ -3,6 +3,7 @@ import {
   CART_ADD_PRODUCT,
   CART_ERROR,
   CART_REMOVE_PRODUCT,
+  CART_SAVE_SHIPPING,
 } from 'constants/cartConstants'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -33,4 +34,8 @@ const removeFromCart = (productId) => async (dispatch, getState) => {
   }
 }
 
-export { addToCart, removeFromCart }
+const saveShipping = (data) => (dispatch) => {
+  dispatch({ type: CART_SAVE_SHIPPING, payload: data })
+}
+
+export { addToCart, removeFromCart, saveShipping }

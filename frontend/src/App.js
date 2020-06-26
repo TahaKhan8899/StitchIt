@@ -10,6 +10,7 @@ import Footer from 'components/common/Footer'
 import SignIn from 'components/pages/SignIn'
 import Register from 'components/pages/Register'
 import CreateProduct from 'components/pages/CreateProduct/CreateProduct'
+import Checkout from 'components/pages/Checkout'
 
 const MainContent = styled.div`
   background-color: #f6f7f8;
@@ -29,6 +30,7 @@ function App() {
             <Route path="/products/:id" component={Product} />
             <Route path="/createProduct" component={CreateProduct} />
             <Route path="/cart/:id?" component={Cart} />
+            <Route path="/checkout" component={Checkout} />
           </MainContent>
         </main>
         <Footer />
