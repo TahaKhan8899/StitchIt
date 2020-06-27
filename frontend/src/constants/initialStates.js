@@ -8,7 +8,7 @@ const commonInitialState = {
 }
 
 const cartItems = Cookie.getJSON('cartItems') || []
-const cartInitialState = { cartItems }
+const cartInitialState = { cartItems, shipping: {}, payment: {} }
 
 const userInfo = Cookie.getJSON('userInfo') || null
 const userInitialState = { ...commonInitialState, data: { loggedInUser: userInfo } }

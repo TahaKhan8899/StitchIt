@@ -4,6 +4,7 @@ import {
   CART_ERROR,
   CART_REMOVE_PRODUCT,
   CART_SAVE_SHIPPING,
+  CART_SAVE_PAYMENT,
 } from 'constants/cartConstants'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -38,4 +39,8 @@ const saveShipping = (data) => (dispatch) => {
   dispatch({ type: CART_SAVE_SHIPPING, payload: data })
 }
 
-export { addToCart, removeFromCart, saveShipping }
+const savePayment = (data) => (dispatch) => {
+  dispatch({ type: CART_SAVE_PAYMENT, payload: data })
+}
+
+export { addToCart, removeFromCart, saveShipping, savePayment }

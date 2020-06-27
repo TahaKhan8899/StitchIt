@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { breakPoints } from 'globalConstants'
+import { breakPoints, SystemColor } from 'globalConstants'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import { saveShipping } from 'actions/cartActions'
@@ -31,6 +32,7 @@ const FormContainer = styled.div`
   border-radius: 0.5rem;
   padding: 1.5rem;
   margin-top: 3rem;
+  background-color: ${SystemColor.uiElements.formBackground};
 `
 
 const FormInputColumn = styled(Column)`
@@ -42,7 +44,7 @@ const FormInputColumn = styled(Column)`
   }
 `
 
-function Shipping(props) {
+function Shipping() {
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [postalCode, setPostalCode] = useState('')
@@ -50,11 +52,12 @@ function Shipping(props) {
   const [province, setProvince] = useState('')
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(saveShipping(address, city, postalCode, country, province))
-    props.history.push('/payment')
+    dispatch(saveShipping({ address, city, postalCode, country, province }))
+    history.push('/checkout/payment')
   }
   return (
     <StyledBodyContainer>
