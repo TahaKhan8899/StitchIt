@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { useSelector, useDispatch } from 'react-redux'
-import { addToCart, removeFromCart } from 'actions/cartActions'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import CheckoutSteps from './CheckoutSteps'
 import ShowForSizes from 'components/HOC/ShowForSizes'
+import { createOrder } from 'actions/orderActions'
 
 const PlaceOrderContainer = styled(BodyContainer)`
   display: flex;
@@ -94,7 +94,9 @@ const SummaryRow = styled(Row)`
 
 function PlaceOrder(props) {
   const cart = useSelector((state) => state.cart)
-  const { cartItems, shipping, payment } = cart
+  const createdOrder = useSelector((state) => state.createOrder)
+  const { loading, success, error } = createdOrder
+  const { cartItems, shipping, payment, order } = cart
   const history = useHistory()
 
   if (!shipping.address) {
@@ -105,19 +107,23 @@ function PlaceOrder(props) {
 
   const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0)
   const shippingPrice = itemsPrice > 50 ? 0 : 10
-  const taxPrice = itemsPrice * 0.15
+  const taxPrice = itemsPrice * 0.13
   const totalPrice = itemsPrice + shippingPrice + taxPrice
+  console.log(totalPrice)
 
   const dispatch = useDispatch()
 
   const handlePlaceOrder = () => {
-    props.history.push('/signin?redirect=checkout/shipping')
+    dispatch(
+      createOrder({ cartItems, shipping, payment, itemsPrice, shippingPrice, taxPrice, totalPrice })
+    )
   }
-  //   useEffect(() => {
-  //     if (productId) {
-  //       dispatch(addToCart(productId, qty))
-  //     }
-  //   }, [dispatch, qty, productId])
+  useEffect(() => {
+    const orderId = order && order._id
+    if (success) {
+      history.push('/order/' + order._id)
+    }
+  }, [history, success, order])
 
   return (
     <>
