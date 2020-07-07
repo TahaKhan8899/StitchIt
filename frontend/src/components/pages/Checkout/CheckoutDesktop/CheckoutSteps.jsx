@@ -5,7 +5,9 @@ const CheckoutStepsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 40rem;
-  margin: 2rem auto;
+  padding: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 const CheckoutStep = styled.div`

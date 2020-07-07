@@ -17,7 +17,7 @@ const CartList = styled(Column)`
   li {
     list-style-type: none;
   }
-  padding-right: 5rem;
+  padding-right: 2rem;
 `
 const CartActions = styled(Column)`
   flex: 1 1 20rem;

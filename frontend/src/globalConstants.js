@@ -20,6 +20,7 @@ const SystemColor = {
     errorRed: '#fa3737',
     loadingYellow: '#fae248',
     buttonOrange: '#f0c040',
+    formBackground: '#f0f1f5',
   },
 }
 
