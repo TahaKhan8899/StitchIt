@@ -8,6 +8,7 @@ import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import CheckoutSteps from './CheckoutSteps'
 import ShowForSizes from 'components/HOC/ShowForSizes'
 import { createOrder } from 'actions/orderActions'
+import { roundTo } from 'utils/numberUtils'
 
 const PlaceOrderContainer = styled(BodyContainer)`
   display: flex;
@@ -108,6 +109,7 @@ function PlaceOrder(props) {
   const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0)
   const shippingPrice = itemsPrice > 50 ? 0 : 10
   const taxPrice = itemsPrice * 0.13
+  console.log('tax: ', taxPrice, ' type: ', typeof taxPrice)
   const totalPrice = itemsPrice + shippingPrice + taxPrice
   console.log(totalPrice)
 
@@ -143,7 +145,7 @@ function PlaceOrder(props) {
                 Item(s):
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${itemsPrice}
+                ${roundTo(itemsPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -151,7 +153,7 @@ function PlaceOrder(props) {
                 Shipping:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${shippingPrice}
+                ${roundTo(shippingPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -159,7 +161,7 @@ function PlaceOrder(props) {
                 Tax:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${taxPrice}
+                ${roundTo(taxPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -167,7 +169,7 @@ function PlaceOrder(props) {
                 Order Total:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${totalPrice}
+                ${roundTo(totalPrice, 2)}
               </Column>
             </SummaryRow>
           </OrderActions>
@@ -231,7 +233,7 @@ function PlaceOrder(props) {
                 Item(s):
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${itemsPrice}
+                ${roundTo(itemsPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -239,7 +241,7 @@ function PlaceOrder(props) {
                 Shipping:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${shippingPrice}
+                ${roundTo(shippingPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -247,7 +249,7 @@ function PlaceOrder(props) {
                 Tax:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${taxPrice}
+                ${roundTo(taxPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -255,7 +257,7 @@ function PlaceOrder(props) {
                 Order Total:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${totalPrice}
+                ${roundTo(totalPrice, 2)}
               </Column>
             </SummaryRow>
           </OrderActions>
