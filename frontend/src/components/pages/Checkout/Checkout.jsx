@@ -3,6 +3,7 @@ import ShowForSizes from 'components/HOC/ShowForSizes'
 import CheckoutDesktop from './CheckoutDesktop'
 
 function Checkout() {
+  // TODO: CHECKOUT RESPONSIVE!!!
   return (
     <>
       <ShowForSizes showOnlyFor={['xl', 'lg', 'md']}>

@@ -1,23 +1,23 @@
 import mongoose from 'mongoose'
 
-const shippingSchema = new mongoose.Schema({
+const shippingSchema = {
   address: { type: String, required: true },
   city: { type: String, required: true },
   postalCode: { type: String, required: true },
   country: { type: String, required: true },
-})
+}
 
-const paymentSchema = new mongoose.Schema({
+const paymentSchema = {
   paymentMethod: { type: String, required: true },
-})
+}
 
-const orderItemSchema = mongoose.Schema({
+const orderItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   qty: { type: String, required: true },
   image: { type: String, required: true },
   price: { type: String, required: true },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
+  _id: {
+    type: mongoose.Schema.Types,
     ref: 'Product',
     required: true,
   },
@@ -25,7 +25,7 @@ const orderItemSchema = mongoose.Schema({
 
 const orderSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types, ref: 'User', required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     orderItems: [orderItemSchema],
     shipping: shippingSchema,
     payment: paymentSchema,
@@ -43,6 +43,6 @@ const orderSchema = new mongoose.Schema(
   }
 )
 
-const orderModel = mongoose.model('Order', orderSchema)
+const Order = mongoose.model('Order', orderSchema)
 
-export default orderModel
+export default Order

@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom'
 const StyledBodyContainer = styled(BodyContainer)`
   display: flex;
   justify-content: center;
+  padding-bottom: 4rem;
 `
 
 const FormColumn = styled(Column)`
