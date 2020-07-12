@@ -11,6 +11,7 @@ import SignIn from 'components/pages/SignIn'
 import Register from 'components/pages/Register'
 import CreateProduct from 'components/pages/CreateProduct/CreateProduct'
 import Checkout from 'components/pages/Checkout'
+import Order from 'components/pages/Checkout/Order'
 
 const MainContent = styled.div`
   background-color: #f6f7f8;
@@ -31,6 +32,7 @@ function App() {
             <Route path="/createProduct" component={CreateProduct} />
             <Route path="/cart/:id?" component={Cart} />
             <Route path="/checkout/:step?" component={Checkout} />
+            <Route path="/order/:orderId?" component={Order} />
           </MainContent>
         </main>
         <Footer />

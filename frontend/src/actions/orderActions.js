@@ -22,4 +22,23 @@ const createOrder = (order) => async (dispatch, getState) => {
   }
 }
 
-export { createOrder }
+const getOrderDetails = (orderId) => async (dispatch, getState) => {
+  try {
+    const {
+      user: {
+        data: { loggedInUser },
+      },
+    } = getState()
+    dispatch({ type: OrderActions.GET_ORDER_LOADING, payload: orderId })
+    const { data } = await axios.get('/api/orders/' + orderId, {
+      headers: {
+        Authorization: ' Bearer ' + loggedInUser.token,
+      },
+    })
+    dispatch({ type: OrderActions.GET_ORDER_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: OrderActions.GET_ORDER_ERROR, payload: error.message })
+  }
+}
+
+export { createOrder, getOrderDetails }

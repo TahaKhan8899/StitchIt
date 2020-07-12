@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { useSelector, useDispatch } from 'react-redux'
-import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
-import CheckoutSteps from './CheckoutSteps'
+import {
+  BodyContainer,
+  Row,
+  Column,
+  LoadingState,
+  ErrorState,
+} from 'components/common/layoutStyling'
 import ShowForSizes from 'components/HOC/ShowForSizes'
-import { createOrder } from 'actions/orderActions'
+import { getOrderDetails } from 'actions/orderActions'
 import { roundTo } from 'utils/numberUtils'
 
 const PlaceOrderContainer = styled(BodyContainer)`
@@ -68,7 +73,7 @@ const EmptyCart = styled.div`
   margin-top: 2rem;
 `
 
-const CartItemRow = styled(Row)`
+const OrderItemRow = styled(Row)`
   justify-content: space-between;
   img {
     max-width: 10rem;
@@ -94,56 +99,35 @@ const SummaryRow = styled(Row)`
   }
 `
 
-function PlaceOrder(props) {
-  const cart = useSelector((state) => state.cart)
-  const createdOrder = useSelector((state) => state.createOrder)
-  const { success, order } = createdOrder
-  const { cartItems, shipping, payment } = cart
-  const history = useHistory()
-
-  if (!shipping.address) {
-    history.push('/checkout/shipping')
-  } else if (!payment.paymentMethod) {
-    history.push('/checkout/payment')
-  }
-
-  const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0)
-  const shippingPrice = itemsPrice > 50 ? 0 : 10
-  const taxPrice = itemsPrice * 0.13
-  const totalPrice = itemsPrice + shippingPrice + taxPrice
+function Order() {
+  const { orderId } = useParams()
 
   const dispatch = useDispatch()
 
-  const handlePlaceOrder = () => {
-    dispatch(
-      createOrder({
-        orderItems: cartItems,
-        shipping,
-        payment,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice,
-      })
-    )
-  }
   useEffect(() => {
-    if (success) {
-      history.push('/order/' + order._id)
-    }
-  }, [history, success, order])
+    dispatch(getOrderDetails(orderId))
+  }, [dispatch, orderId])
 
-  return (
+  const orderDetails = useSelector((state) => state.orderDetails)
+  const { loading, order, error } = orderDetails
+
+  const payHandler = () => {}
+
+  return loading ? (
+    <BodyContainer>
+      <LoadingState>Loading...</LoadingState>
+    </BodyContainer>
+  ) : error ? (
+    <BodyContainer>
+      <ErrorState>{error}</ErrorState>
+    </BodyContainer>
+  ) : (
     <>
-      <CheckoutSteps step1 step2 step3 step4 />
       <PlaceOrderContainer>
         <ShowForSizes showOnlyFor={['md']}>
           <OrderActions>
-            <FormButton
-              bgColor={SystemColor.uiElements.buttonOrange}
-              onClick={() => handlePlaceOrder()}
-            >
-              Place Order
+            <FormButton bgColor={SystemColor.uiElements.buttonOrange} onClick={payHandler}>
+              Pay Now
             </FormButton>
             <h3>Order Summary</h3>
             <SummaryRow>
@@ -151,7 +135,7 @@ function PlaceOrder(props) {
                 Item(s):
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(itemsPrice, 2)}
+                ${roundTo(order.itemsPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -159,7 +143,7 @@ function PlaceOrder(props) {
                 Shipping:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(shippingPrice, 2)}
+                ${roundTo(order.shippingPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -167,7 +151,7 @@ function PlaceOrder(props) {
                 Tax:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(taxPrice, 2)}
+                ${roundTo(order.taxPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -175,7 +159,7 @@ function PlaceOrder(props) {
                 Order Total:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(totalPrice, 2)}
+                ${roundTo(order.totalPrice, 2)}
               </Column>
             </SummaryRow>
           </OrderActions>
@@ -185,30 +169,38 @@ function PlaceOrder(props) {
             <Column>
               <h3>Shipping Address</h3>
               <div>
-                {cart.shipping.address}, {cart.shipping.city}, {cart.shipping.province},{' '}
-                {cart.shipping.postalCode}, {cart.shipping.country}
+                {order.shipping.address}, {order.shipping.city}, {order.shipping.province},{' '}
+                {order.shipping.postalCode}, {order.shipping.country}
+              </div>
+              <div>
+                <h3>
+                  {order.isDelivered ? 'Delivered at ' + order.deliveredAt : 'Not Delivered.'}
+                </h3>
               </div>
             </Column>
           </OrderStep>
           <OrderStep>
             <Column>
               <h3>Payment Method</h3>
-              <div>{cart.payment.paymentMethod}</div>
+              <div>{order.payment.paymentMethod}</div>
+              <h3>
+                <div>{order.isPaid ? 'Paid at ' + order.paidAt : 'Not Paid.'}</div>
+              </h3>
             </Column>
           </OrderStep>
           <OrderStep>
             <Column>
               <OrderTopRow>
-                <h3>Products</h3>
+                <h3>Product</h3>
                 <div>Price</div>
               </OrderTopRow>
-              {cartItems.length === 0 ? (
-                <EmptyCart>Cart is empty</EmptyCart>
+              {order.orderItems.length === 0 ? (
+                <EmptyCart>Order is empty</EmptyCart>
               ) : (
                 <Row>
                   <Column>
-                    {cartItems.map((item, index) => (
-                      <CartItemRow key={`product-${index}`}>
+                    {order.orderItems.map((item, index) => (
+                      <OrderItemRow key={`product-${index}`}>
                         <Product>
                           <img src={item.image} alt="product-img" />
                           <ProductInfo>
@@ -217,7 +209,7 @@ function PlaceOrder(props) {
                           </ProductInfo>
                         </Product>
                         <div>${item.price}</div>
-                      </CartItemRow>
+                      </OrderItemRow>
                     ))}
                   </Column>
                 </Row>
@@ -227,10 +219,7 @@ function PlaceOrder(props) {
         </OrderSummarySection>
         <ShowForSizes showOnlyFor={['xl', 'lg']}>
           <OrderActions>
-            <FormButton
-              bgColor={SystemColor.uiElements.buttonOrange}
-              onClick={() => handlePlaceOrder()}
-            >
+            <FormButton bgColor={SystemColor.uiElements.buttonOrange} onClick={() => {}}>
               Place Order
             </FormButton>
             <h3>Order Summary</h3>
@@ -239,7 +228,7 @@ function PlaceOrder(props) {
                 Item(s):
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(itemsPrice, 2)}
+                ${roundTo(order.itemsPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -247,7 +236,7 @@ function PlaceOrder(props) {
                 Shipping:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(shippingPrice, 2)}
+                ${roundTo(order.shippingPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -255,7 +244,7 @@ function PlaceOrder(props) {
                 Tax:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(taxPrice, 2)}
+                ${roundTo(order.taxPrice, 2)}
               </Column>
             </SummaryRow>
             <SummaryRow>
@@ -263,7 +252,7 @@ function PlaceOrder(props) {
                 Order Total:
               </Column>
               <Column xl="50%" lg="50%" md="50%">
-                ${roundTo(totalPrice, 2)}
+                ${roundTo(order.totalPrice, 2)}
               </Column>
             </SummaryRow>
           </OrderActions>
@@ -272,4 +261,4 @@ function PlaceOrder(props) {
     </>
   )
 }
-export default PlaceOrder
+export default Order

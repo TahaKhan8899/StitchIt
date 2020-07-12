@@ -4,6 +4,16 @@ import Order from '../models/orderModel'
 
 const router = express.Router()
 
+router.get('/:id', isAuth, async (req, res) => {
+  try {
+    const orderId = req.params.id
+    const order = await Order.findById(orderId)
+    res.send(order)
+  } catch (error) {
+    res.status(404).send('Order Not Found')
+  }
+})
+
 router.post('/', isAuth, async (req, res) => {
   try {
     const newOrder = new Order({

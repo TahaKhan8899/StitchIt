@@ -11,6 +11,7 @@ import CheckoutSteps from './CheckoutSteps'
 const StyledBodyContainer = styled(BodyContainer)`
   display: flex;
   justify-content: center;
+  padding-bottom: 4rem;
 `
 
 const FormColumn = styled(Column)`
