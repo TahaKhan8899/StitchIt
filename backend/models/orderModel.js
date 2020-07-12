@@ -16,8 +16,8 @@ const orderItemSchema = mongoose.Schema({
   qty: { type: String, required: true },
   image: { type: String, required: true },
   price: { type: String, required: true },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
+  _id: {
+    type: mongoose.Schema.Types,
     ref: 'Product',
     required: true,
   },
@@ -43,6 +43,6 @@ const orderSchema = new mongoose.Schema(
   }
 )
 
-const orderModel = mongoose.model('Order', orderSchema)
+const Order = mongoose.model('Order', orderSchema)
 
-export default orderModel
+export default Order

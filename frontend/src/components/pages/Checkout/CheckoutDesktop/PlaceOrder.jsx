@@ -96,8 +96,8 @@ const SummaryRow = styled(Row)`
 function PlaceOrder(props) {
   const cart = useSelector((state) => state.cart)
   const createdOrder = useSelector((state) => state.createOrder)
-  const { loading, success, error } = createdOrder
-  const { cartItems, shipping, payment, order } = cart
+  const { loading, success, error, order } = createdOrder
+  const { cartItems, shipping, payment } = cart
   const history = useHistory()
 
   if (!shipping.address) {
@@ -109,9 +109,7 @@ function PlaceOrder(props) {
   const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0)
   const shippingPrice = itemsPrice > 50 ? 0 : 10
   const taxPrice = itemsPrice * 0.13
-  console.log('tax: ', taxPrice, ' type: ', typeof taxPrice)
   const totalPrice = itemsPrice + shippingPrice + taxPrice
-  console.log(totalPrice)
 
   const dispatch = useDispatch()
 
