@@ -117,7 +117,15 @@ function PlaceOrder(props) {
 
   const handlePlaceOrder = () => {
     dispatch(
-      createOrder({ cartItems, shipping, payment, itemsPrice, shippingPrice, taxPrice, totalPrice })
+      createOrder({
+        orderItems: cartItems,
+        shipping,
+        payment,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      })
     )
   }
   useEffect(() => {
