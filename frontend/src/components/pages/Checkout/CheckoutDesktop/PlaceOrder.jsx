@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
 import CheckoutSteps from './CheckoutSteps'
 import ShowForSizes from 'components/HOC/ShowForSizes'
-import { createOrder } from 'actions/orderActions'
+import { orderCreate } from 'actions/orderActions'
 import { roundTo } from 'utils/numberUtils'
 
 const PlaceOrderContainer = styled(BodyContainer)`
@@ -96,7 +96,7 @@ const SummaryRow = styled(Row)`
 
 function PlaceOrder(props) {
   const cart = useSelector((state) => state.cart)
-  const createdOrder = useSelector((state) => state.createOrder)
+  const createdOrder = useSelector((state) => state.orderCreate)
   const { success, order } = createdOrder
   const { cartItems, shipping, payment } = cart
   const history = useHistory()
@@ -116,7 +116,7 @@ function PlaceOrder(props) {
 
   const handlePlaceOrder = () => {
     dispatch(
-      createOrder({
+      orderCreate({
         orderItems: cartItems,
         shipping,
         payment,

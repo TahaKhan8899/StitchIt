@@ -9,7 +9,7 @@ import {
 } from 'reducers/productReducers'
 import { cartReducer } from 'reducers/cartReducers'
 import { userReducer } from 'reducers/userReducers'
-import { createOrderReducer, getOrderReducer } from 'reducers/orderReducers'
+import { orderCreateReducer, orderDetailsReducer } from 'reducers/orderReducers'
 
 const initialState = { cart: cartInitialState, user: userInitialState }
 
@@ -20,8 +20,8 @@ const reducer = combineReducers({
   deletedProduct: deletedProductReducer,
   cart: cartReducer,
   user: userReducer,
-  createOrder: createOrderReducer,
-  orderDetails: getOrderReducer,
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
 })
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
