@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -14,11 +13,12 @@ import {
 import ShowForSizes from 'components/HOC/ShowForSizes'
 import { getOrderDetails } from 'actions/orderActions'
 import { roundTo } from 'utils/numberUtils'
+import { FormButton } from 'components/common/SystemStyledComponents'
 
 const PlaceOrderContainer = styled(BodyContainer)`
   display: flex;
   flex-wrap: wrap;
-  padding-top: 2rem;
+  padding-top: 2rem !important;
   padding-bottom: 4rem;
 `
 const OrderSummarySection = styled(Column)`
@@ -98,7 +98,6 @@ const SummaryRow = styled(Row)`
     color: #c04000;
   }
 `
-
 function Order() {
   const { orderId } = useParams()
 

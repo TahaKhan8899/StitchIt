@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Actions as OrderActions } from 'constants/orderConstants'
 
-const createOrder = (order) => async (dispatch, getState) => {
-  dispatch({ type: OrderActions.CREATE_ORDER_LOADING, payload: order })
+const orderCreate = (order) => async (dispatch, getState) => {
+  dispatch({ type: OrderActions.ORDER_CREATE_LOADING, payload: order })
   try {
     const {
       user: {
@@ -16,9 +16,9 @@ const createOrder = (order) => async (dispatch, getState) => {
         Authorization: ' Bearer ' + loggedInUser.token,
       },
     })
-    dispatch({ type: OrderActions.CREATE_ORDER_SUCCESS, payload: newOrder })
+    dispatch({ type: OrderActions.ORDER_CREATE_SUCCESS, payload: newOrder })
   } catch (error) {
-    dispatch({ type: OrderActions.CREATE_ORDER_ERROR, payload: error.message })
+    dispatch({ type: OrderActions.ORDER_CREATE_ERROR, payload: error.message })
   }
 }
 
@@ -29,16 +29,16 @@ const getOrderDetails = (orderId) => async (dispatch, getState) => {
         data: { loggedInUser },
       },
     } = getState()
-    dispatch({ type: OrderActions.GET_ORDER_LOADING, payload: orderId })
+    dispatch({ type: OrderActions.ORDER_GET_LOADING, payload: orderId })
     const { data } = await axios.get('/api/orders/' + orderId, {
       headers: {
         Authorization: ' Bearer ' + loggedInUser.token,
       },
     })
-    dispatch({ type: OrderActions.GET_ORDER_SUCCESS, payload: data })
+    dispatch({ type: OrderActions.ORDER_GET_SUCCESS, payload: data })
   } catch (error) {
-    dispatch({ type: OrderActions.GET_ORDER_ERROR, payload: error.message })
+    dispatch({ type: OrderActions.ORDER_GET_ERROR, payload: error.message })
   }
 }
 
-export { createOrder, getOrderDetails }
+export { orderCreate, getOrderDetails }
