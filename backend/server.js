@@ -20,21 +20,21 @@ app.use('/api/products', productRouter)
 app.use('/api/orders', orderRouter)
 
 // TODO: Integrate with the payment object that gets created from client
-// async function createPaymentIntent() {
-//   const paymentIntent = await stripe.paymentIntents.create({
-//     amount: 1099,
-//     currency: 'cad',
-//     // Verify your integration in this guide by including this parameter
-//     metadata: { integration_check: 'accept_a_payment' },
-//   })
-//   return paymentIntent
-// }
+async function createPaymentIntent() {
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 1099,
+    currency: 'cad',
+    // Verify your integration in this guide by including this parameter
+    metadata: { integration_check: 'accept_a_payment' },
+  })
+  return paymentIntent
+}
 
-// app.get('/secret', async (req, res) => {
-//   const intent = createPaymentIntent().then((int) => {
-//     res.send(int.client_secret)
-//   })
-// })
+app.get('/secret', async (req, res) => {
+  const intent = createPaymentIntent().then((int) => {
+    res.send(int.client_secret)
+  })
+})
 
 app.listen(config.PORT, () => {
   console.log(`server started at port: ${config.PORT}`)

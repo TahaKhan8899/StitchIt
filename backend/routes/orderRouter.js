@@ -28,12 +28,13 @@ async function createPaymentIntent(order) {
 }
 
 router.post('/', isAuth, async (req, res) => {
+  // TODO: change payment to use the paymentIntent object ^
   try {
     const newOrder = new Order({
       user: req.user._id,
       orderItems: req.body.orderItems,
       shipping: req.body.shipping,
-      payment: 10,
+      payment: { paymentMethod: 'paypal' },
       itemsPrice: req.body.itemsPrice,
       taxPrice: req.body.taxPrice,
       shippingPrice: req.body.shippingPrice,
