@@ -33,7 +33,7 @@ router.post('/', isAuth, async (req, res) => {
       user: req.user._id,
       orderItems: req.body.orderItems,
       shipping: req.body.shipping,
-      payment: createPaymentIntent(req.body),
+      payment: 10,
       itemsPrice: req.body.itemsPrice,
       taxPrice: req.body.taxPrice,
       shippingPrice: req.body.shippingPrice,
