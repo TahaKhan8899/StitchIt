@@ -6,6 +6,7 @@ export default function Toast({ type, msg }) {
   switch (type) {
     case 'error':
       toast.error(msg)
+      break
     default:
       break
   }

@@ -13,6 +13,7 @@ import { orderCreateReducer, orderDetailsReducer, orderPayReducer } from 'reduce
 
 const initialState = { cart: cartInitialState, user: userInitialState }
 
+// TODO: Refactor the errors in the actions to 'error.response.message' instead of 'error' or 'error.message'
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,

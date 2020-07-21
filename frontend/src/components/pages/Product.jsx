@@ -3,13 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor } from 'globalConstants'
-import {
-  BodyContainer,
-  Row,
-  Column,
-  LoadingState,
-  ErrorState,
-} from 'components/common/layoutStyling'
+import { BodyContainer, Row, Column, LoadingState } from 'components/common/layoutStyling'
 import Toast from 'components/Toast'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductDetails } from 'actions/productActions'

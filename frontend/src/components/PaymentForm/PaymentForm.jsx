@@ -6,7 +6,7 @@ import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor } from 'globalConstants'
 import axios from 'axios'
 import { Actions as OrderActions } from 'constants/orderConstants'
-import { LoadingState, ErrorState } from 'components/common/layoutStyling'
+import { LoadingState } from 'components/common/layoutStyling'
 import Toast from 'components/Toast'
 
 export default function PaymentForm() {
@@ -15,7 +15,7 @@ export default function PaymentForm() {
   const dispatch = useDispatch()
 
   const orderPayResults = useSelector((state) => state.orderPay)
-  const { loading, order, error } = orderPayResults
+  const { loading, error } = orderPayResults
 
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
@@ -30,7 +30,6 @@ export default function PaymentForm() {
     dispatch({ type: OrderActions.ORDER_PAY_LOADING })
 
     const { data: clientSecret } = await axios.get('/secret')
-    console.log(clientSecret)
 
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
