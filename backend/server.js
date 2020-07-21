@@ -6,17 +6,14 @@ import userRouter from './routes/userRoute'
 import productRouter from './routes/productRoute'
 import orderRouter from './routes/orderRouter'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 const stripe = require('stripe')(config.STRIPE_SECRET)
 
 connectToMongoDB()
 
 const app = express()
 app.use(bodyParser.json())
-
-// app.use(express.static(path.join(__dirname, '/../frontend/build')))
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`))
-// })
+app.use(cors())
 
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
