@@ -14,6 +14,7 @@ import ShowForSizes from 'components/HOC/ShowForSizes'
 import { getOrderDetails } from 'actions/orderActions'
 import { roundTo } from 'utils/numberUtils'
 import PaymentForm from 'components/PaymentForm'
+import Toast from 'components/Toast'
 
 const PlaceOrderContainer = styled(BodyContainer)`
   display: flex;
@@ -122,9 +123,7 @@ function Order() {
       <LoadingState>Loading...</LoadingState>
     </BodyContainer>
   ) : error ? (
-    <BodyContainer>
-      <ErrorState>{error}</ErrorState>
-    </BodyContainer>
+    <Toast type="error" msg={error} />
   ) : (
     <>
       <PlaceOrderContainer>

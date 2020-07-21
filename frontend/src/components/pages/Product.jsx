@@ -10,6 +10,7 @@ import {
   LoadingState,
   ErrorState,
 } from 'components/common/layoutStyling'
+import Toast from 'components/Toast'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductDetails } from 'actions/productActions'
 import { useState } from 'react'
@@ -83,9 +84,7 @@ function Product(props) {
       <LoadingState>Loading...</LoadingState>
     </BodyContainer>
   ) : error ? (
-    <BodyContainer>
-      <ErrorState>{error}</ErrorState>
-    </BodyContainer>
+    <Toast type="error" msg={error} />
   ) : (
     <BodyContainer>
       <Row>

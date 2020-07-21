@@ -7,6 +7,7 @@ import { SystemColor } from 'globalConstants'
 import axios from 'axios'
 import { Actions as OrderActions } from 'constants/orderConstants'
 import { LoadingState, ErrorState } from 'components/common/layoutStyling'
+import Toast from 'components/Toast'
 
 export default function PaymentForm() {
   const stripe = useStripe()
@@ -60,7 +61,7 @@ export default function PaymentForm() {
     <form onSubmit={handleSubmit}>
       <CardSection />
       {loading && <LoadingState>Processing Transaction</LoadingState>}
-      {error && <ErrorState>Error: {error.message}</ErrorState>}
+      {error && <Toast type="error" msg={error} />}
       <FormButton disbaled={!stripe} bgColor={SystemColor.uiElements.buttonOrange}>
         Confirm order
       </FormButton>
