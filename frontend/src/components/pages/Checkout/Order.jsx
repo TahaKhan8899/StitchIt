@@ -13,7 +13,7 @@ import {
 import ShowForSizes from 'components/HOC/ShowForSizes'
 import { getOrderDetails } from 'actions/orderActions'
 import { roundTo } from 'utils/numberUtils'
-import { FormButton } from 'components/common/SystemStyledComponents'
+import PaymentForm from 'components/PaymentForm'
 
 const PlaceOrderContainer = styled(BodyContainer)`
   display: flex;
@@ -22,7 +22,7 @@ const PlaceOrderContainer = styled(BodyContainer)`
   padding-bottom: 4rem;
 `
 const OrderSummarySection = styled(Column)`
-  flex: 3 1 60rem;
+  flex: 1 1 60rem;
   padding-right: 2rem;
   @media only screen and ${breakPoints.md} {
     padding-right: 0;
@@ -98,6 +98,11 @@ const SummaryRow = styled(Row)`
     color: #c04000;
   }
 `
+
+const PaymentFormContainer = styled.div`
+  width: 100%;
+`
+
 function Order() {
   const { orderId } = useParams()
 
@@ -125,9 +130,9 @@ function Order() {
       <PlaceOrderContainer>
         <ShowForSizes showOnlyFor={['md']}>
           <OrderActions>
-            <FormButton bgColor={SystemColor.uiElements.buttonOrange} onClick={payHandler}>
-              Pay Now
-            </FormButton>
+            <PaymentFormContainer>
+              <PaymentForm />
+            </PaymentFormContainer>
             <h3>Order Summary</h3>
             <SummaryRow>
               <Column xl="50%" lg="50%" md="50%">
@@ -218,9 +223,9 @@ function Order() {
         </OrderSummarySection>
         <ShowForSizes showOnlyFor={['xl', 'lg']}>
           <OrderActions>
-            <FormButton bgColor={SystemColor.uiElements.buttonOrange} onClick={() => {}}>
-              Place Order
-            </FormButton>
+            <PaymentFormContainer>
+              <PaymentForm />
+            </PaymentFormContainer>
             <h3>Order Summary</h3>
             <SummaryRow>
               <Column xl="50%" lg="50%" md="50%">

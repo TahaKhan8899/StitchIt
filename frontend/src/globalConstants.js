@@ -18,7 +18,7 @@ const SystemColor = {
   },
   uiElements: {
     errorRed: '#fa3737',
-    loadingYellow: '#fae248',
+    loadingYellow: '#f1b411',
     buttonOrange: '#f0c040',
     formBackground: '#f0f1f5',
   },

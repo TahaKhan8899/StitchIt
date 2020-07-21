@@ -1,6 +1,8 @@
 import express from 'express'
 import { isAuth } from '../util'
 import Order from '../models/orderModel'
+import config from '../config'
+const stripe = require('stripe')(config.STRIPE_SECRET)
 
 const router = express.Router()
 
@@ -14,13 +16,24 @@ router.get('/:id', isAuth, async (req, res) => {
   }
 })
 
+async function createPaymentIntent(order) {
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: order.totalPrice * 100,
+    currency: 'cad',
+    // Verify your integration in this guide by including this parameter
+    metadata: { integration_check: 'accept_a_payment' },
+  })
+  console.log(paymentIntent)
+  return paymentIntent
+}
+
 router.post('/', isAuth, async (req, res) => {
   try {
     const newOrder = new Order({
       user: req.user._id,
       orderItems: req.body.orderItems,
       shipping: req.body.shipping,
-      payment: req.body.payment,
+      payment: createPaymentIntent(req.body),
       itemsPrice: req.body.itemsPrice,
       taxPrice: req.body.taxPrice,
       shippingPrice: req.body.shippingPrice,

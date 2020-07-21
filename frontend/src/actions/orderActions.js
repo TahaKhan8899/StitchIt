@@ -11,6 +11,7 @@ const orderCreate = (order) => async (dispatch, getState) => {
     } = getState()
     const {
       data: { data: newOrder },
+      message,
     } = await axios.post('/api/orders', order, {
       headers: {
         Authorization: ' Bearer ' + loggedInUser.token,
@@ -18,7 +19,10 @@ const orderCreate = (order) => async (dispatch, getState) => {
     })
     dispatch({ type: OrderActions.ORDER_CREATE_SUCCESS, payload: newOrder })
   } catch (error) {
-    dispatch({ type: OrderActions.ORDER_CREATE_ERROR, payload: error.message })
+    dispatch({
+      type: OrderActions.ORDER_CREATE_ERROR,
+      payload: error.response.data.message,
+    })
   }
 }
 

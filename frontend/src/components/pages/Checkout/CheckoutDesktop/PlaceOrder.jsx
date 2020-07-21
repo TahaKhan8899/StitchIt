@@ -4,7 +4,13 @@ import styled from 'styled-components'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { useSelector, useDispatch } from 'react-redux'
-import { BodyContainer, Row, Column } from 'components/common/layoutStyling'
+import {
+  BodyContainer,
+  Row,
+  Column,
+  LoadingState,
+  ErrorState,
+} from 'components/common/layoutStyling'
 import CheckoutSteps from './CheckoutSteps'
 import ShowForSizes from 'components/HOC/ShowForSizes'
 import { orderCreate } from 'actions/orderActions'
@@ -97,7 +103,7 @@ const SummaryRow = styled(Row)`
 function PlaceOrder(props) {
   const cart = useSelector((state) => state.cart)
   const createdOrder = useSelector((state) => state.orderCreate)
-  const { success, order } = createdOrder
+  const { success, order, loading, error } = createdOrder
   const { cartItems, shipping, payment } = cart
   const history = useHistory()
 
@@ -145,6 +151,8 @@ function PlaceOrder(props) {
             >
               Place Order
             </FormButton>
+            {loading && <LoadingState>Creating Order...</LoadingState>}
+            {error && <ErrorState>{error.message}</ErrorState>}
             <h3>Order Summary</h3>
             <SummaryRow>
               <Column xl="50%" lg="50%" md="50%">
@@ -233,6 +241,8 @@ function PlaceOrder(props) {
             >
               Place Order
             </FormButton>
+            {loading && <LoadingState>Creating Order...</LoadingState>}
+            {error && <ErrorState>{error}</ErrorState>}
             <h3>Order Summary</h3>
             <SummaryRow>
               <Column xl="50%" lg="50%" md="50%">
