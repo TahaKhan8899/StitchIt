@@ -11,7 +11,6 @@ const orderCreate = (order) => async (dispatch, getState) => {
     } = getState()
     const {
       data: { data: newOrder },
-      message,
     } = await axios.post('/api/orders', order, {
       headers: {
         Authorization: ' Bearer ' + loggedInUser.token,

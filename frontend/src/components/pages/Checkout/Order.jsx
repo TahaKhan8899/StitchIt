@@ -3,13 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  BodyContainer,
-  Row,
-  Column,
-  LoadingState,
-  ErrorState,
-} from 'components/common/layoutStyling'
+import { BodyContainer, Row, Column, LoadingState } from 'components/common/layoutStyling'
 import ShowForSizes from 'components/HOC/ShowForSizes'
 import { getOrderDetails } from 'actions/orderActions'
 import { roundTo } from 'utils/numberUtils'
@@ -115,8 +109,6 @@ function Order() {
 
   const orderDetails = useSelector((state) => state.orderDetails)
   const { loading, order, error } = orderDetails
-
-  const payHandler = () => {}
 
   return loading ? (
     <BodyContainer>
