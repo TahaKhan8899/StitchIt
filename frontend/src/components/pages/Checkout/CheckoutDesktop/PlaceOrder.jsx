@@ -4,16 +4,11 @@ import styled from 'styled-components'
 import { FormButton } from 'components/common/SystemStyledComponents'
 import { SystemColor, breakPoints } from 'globalConstants'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  BodyContainer,
-  Row,
-  Column,
-  LoadingState,
-  ErrorState,
-} from 'components/common/layoutStyling'
+import { BodyContainer, Row, Column, LoadingState } from 'components/common/layoutStyling'
 import CheckoutSteps from './CheckoutSteps'
 import ShowForSizes from 'components/HOC/ShowForSizes'
 import { orderCreate } from 'actions/orderActions'
+import Toast from 'components/Toast'
 import { roundTo } from 'utils/numberUtils'
 
 const PlaceOrderContainer = styled(BodyContainer)`
@@ -139,8 +134,10 @@ function PlaceOrder(props) {
     }
   }, [history, success, order])
 
+  // TODO: refactor this into speparate components if you have time....
   return (
     <>
+      {error && <Toast type="error" msg={error} />}
       <CheckoutSteps step1 step2 step3 step4 />
       <PlaceOrderContainer>
         <ShowForSizes showOnlyFor={['md']}>
@@ -152,7 +149,6 @@ function PlaceOrder(props) {
               Place Order
             </FormButton>
             {loading && <LoadingState>Creating Order...</LoadingState>}
-            {error && <ErrorState>{error.message}</ErrorState>}
             <h3>Order Summary</h3>
             <SummaryRow>
               <Column xl="50%" lg="50%" md="50%">
@@ -242,7 +238,6 @@ function PlaceOrder(props) {
               Place Order
             </FormButton>
             {loading && <LoadingState>Creating Order...</LoadingState>}
-            {error && <ErrorState>{error}</ErrorState>}
             <h3>Order Summary</h3>
             <SummaryRow>
               <Column xl="50%" lg="50%" md="50%">
