@@ -32,7 +32,7 @@ function App() {
             <Route path="/createProduct" component={CreateProduct} />
             <Route path="/cart/:id?" component={Cart} />
             <Route path="/checkout/:step?" component={Checkout} />
-            <Route path="/order/:orderId?" component={Order} />
+            <Route path="/order/:orderId" component={Order} />
           </MainContent>
         </main>
         <Footer />

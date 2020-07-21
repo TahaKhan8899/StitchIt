@@ -35,4 +35,22 @@ function orderDetailsReducer(
   }
 }
 
-export { orderCreateReducer, orderDetailsReducer }
+function orderPayReducer(
+  state = {
+    order: {},
+  },
+  action
+) {
+  switch (action.type) {
+    case OrderActions.ORDER_PAY_LOADING:
+      return { ...state, loading: true }
+    case OrderActions.ORDER_PAY_ERROR:
+      return { loading: false, error: action.payload }
+    case OrderActions.ORDER_PAY_SUCCESS:
+      return { loading: false, success: true, order: action.payload }
+    default:
+      return state
+  }
+}
+
+export { orderCreateReducer, orderDetailsReducer, orderPayReducer }

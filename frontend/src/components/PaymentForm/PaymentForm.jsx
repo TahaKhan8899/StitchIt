@@ -1,11 +1,20 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 import CardSection from 'components/CardSection'
+import { FormButton } from 'components/common/SystemStyledComponents'
+import { SystemColor } from 'globalConstants'
 import axios from 'axios'
+import { Actions as OrderActions } from 'constants/orderConstants'
+import { LoadingState, ErrorState } from 'components/common/layoutStyling'
 
 export default function PaymentForm() {
   const stripe = useStripe()
   const elements = useElements()
+  const dispatch = useDispatch()
+
+  const orderPayResults = useSelector((state) => state.orderPay)
+  const { loading, order, error } = orderPayResults
 
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
@@ -17,6 +26,7 @@ export default function PaymentForm() {
       // Make sure to disable form submission until Stripe.js has loaded.
       return
     }
+    dispatch({ type: OrderActions.ORDER_PAY_LOADING })
 
     const { data: clientSecret } = await axios.get('/secret')
     console.log(clientSecret)
@@ -31,8 +41,7 @@ export default function PaymentForm() {
     })
 
     if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message)
+      dispatch({ type: OrderActions.ORDER_PAY_ERROR, payload: result.error })
     } else {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
@@ -42,6 +51,7 @@ export default function PaymentForm() {
         // payment_intent.succeeded event that handles any business critical
         // post-payment actions.
         console.log('Payment Success!')
+        dispatch({ type: OrderActions.ORDER_PAY_SUCCESS, payload: result })
       }
     }
   }
@@ -49,7 +59,11 @@ export default function PaymentForm() {
   return (
     <form onSubmit={handleSubmit}>
       <CardSection />
-      <button disabled={!stripe}>Confirm order</button>
+      {loading && <LoadingState>Processing Transaction</LoadingState>}
+      {error && <ErrorState>Error: {error.message}</ErrorState>}
+      <FormButton disbaled={!stripe} bgColor={SystemColor.uiElements.buttonOrange}>
+        Confirm order
+      </FormButton>
     </form>
   )
 }
